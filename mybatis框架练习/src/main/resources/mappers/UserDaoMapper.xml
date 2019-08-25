@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，
+     namespace：命名空间，作用就是对sql语句进行分类管理
+-->
+<mapper namespace="UserDaoMapper">
+    <!--在映射文件中配置了很多的SQL语句-->
+    <!--
+         id：SQL语句的唯一标识，将SQL语句封装到preparedStatement对象中，所以将此id称为statementID
+         parameterType:表示要传入的参数类型，与数据库数据类型保持一致
+         resultType：sql语句查询结果集的封装类型
+         #{}表示一个占位符
+         #{id}：其中的id表示输入的参数，参数名就是id，如果输入参数是简单类型， #{}中的参数名可以任意，
+                可以是value或其他名称
+     -->
+    <!--根据id查询用户-->
+    <select id="findUserById" resultType="com.lynu.pojo.User">
+        select * from user where user_id = #{user_id};
+    </select>
+    <!--查询所有用户信息-->
+    <select id="findAllUser" resultType="com.lynu.pojo.User">
+        select * from user;
+    </select>
+    <!--添加用户-->
+    <insert id="addUser" parameterType="com.lynu.pojo.User">
+        insert into user(user_name,user_age,user_sex,role_id) values (#{user_name},#{user_age},#{user_sex},#{role_id});
+    </insert>
+    <!--更新用户-->
+    <update id="updateUser" parameterType="com.lynu.pojo.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="user_name!=null">user_name = #{user_name},</if>
+            <if test="user_age!=null">user_age = #{user_age},</if>
+            <if test="user_sex!=null">user_sex = #{user_sex},</if>
+            <if test="role_id!=null">role_id = #{role_id},</if>
+        </trim>
+        WHERE
+        (user_id = #{user_id});
+    </update>
+    <!--根据id删除用户-->
+    <delete id="delUserById" parameterType="int">
+        delete from user where user_id = #{user_id};
+    </delete>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--注意声明命名空间
+        创建实例的命名空间：xmlns="http://www.springframework.org/schema/beans"
+        aop编程的命名空间：xmlns:aop="http://www.springframework.org/schema/aop"
+        注解的命名空间：xmlns:context="http://www.springframework.org/schema/context"
+     -->
+    <!--扫描使用注解创建实例对象的类-->
+    <context:component-scan base-package="cn.lynu.xy.aop.aspectjannotation"></context:component-scan>
+    <!--扫描aop注解，让使用aop注解的通知生效-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+</beans>

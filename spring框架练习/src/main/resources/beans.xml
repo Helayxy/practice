@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置bookService实例(默认构造方式)
+     bean：配置需要创建的对象
+     id ：用于之后从spring容器获得对象的时候使用（任意写）
+     class：需要创建实例的全限定类名
+     property：用于进行依赖注入
+     name：需要注入的bean的属性名
+     ref：需要注入的bean的id
+    -->
+    <bean id="bookService" class="cn.lynu.xy.ioc.construct.BookServiceImpl">
+        <property name="bookDao" ref="bookDao"></property>
+    </bean>
+    <!-- 配置dao实例-->
+    <bean id="bookDao" class="cn.lynu.xy.ioc.construct.BookDaoImpl"></bean>
+    <!--配置userService实例-->
+    <bean id="userService" class="cn.lynu.xy.ioc.construct.UserServiceImpl"></bean>
+    <!--静态工厂方式
+    写法：<bean id="bookDao" class="工厂的全限定类名" factory-method="工厂的静态方法"></bean>
+    -->
+    <bean id="staticFactory" class="cn.lynu.xy.ioc.statisfactory.StaticFactory" factory-method="createService"></bean>
+    <!--实例工厂装配bean-->
+    <bean id="instanceFactory" class="cn.lynu.xy.ioc.factory.InstanceFactory"></bean><!--创建一个工厂对象-->
+    <!--使用工厂创建的对象去创建UserService对象,并且调用createService方法
+    factory-bean：表示使用工厂的哪个实例对象
+    factory-method：表示使用该对象的哪个方法
+    -->
+    <bean id="userServiceId" factory-bean="instanceFactory" factory-method="createService"></bean>
+    <!--生命周期，测试初始化方法和销毁方法-->
+    <bean id="userService1" class="cn.lynu.xy.ioc.lifecycle.UserServiceImpl"
+          init-method="myInit" destroy-method="myDestroy"></bean>
+
+</beans>
